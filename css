@@ -1,0 +1,340 @@
+$light-blue: #F7FDFF;
+$grey: #AEBEC5;
+$blue-grey: #708090;
+$blue: #1B2C45;
+$dark-blue: #000E24;
+$bright-blue: #428BCA;
+$white: #FFFFFF;
+$black: #000000;
+
+* {
+  font-family: "Helvetica Neue Light", "Helvetica Neue",
+  		Helvetica, Arial, "Lucida Grande", sans-serif;
+  letter-spacing: 1.2px;
+	text-decoration: none;
+	box-sizing: border-box;
+	letter-spacing: 1px;
+}
+
+a {
+	color: $bright-blue;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+}
+
+body {
+	margin: 0;
+	background-color: $light-blue;
+}
+
+@mixin transition($value) {
+	-webkit-transition: $value;
+	-moz-transition: $value;
+	-o-transition: $value;
+	transition: $value;
+}
+
+@mixin border-radius($radius) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	-ms-border-radius: $radius;
+	border-radius: $radius;
+}
+
+@mixin transform($transforms) {
+	-moz-transform: $transforms;
+	-o-transform: $transforms;
+	-ms-transform: $transforms;
+	-webkit-transform: $transforms;
+	transform: $transforms;
+}
+
+@mixin transition ($value) {
+	-webkit-transition: $value;
+	-moz-transition: $value;
+	-ms-transition: $value;
+	-o-transition: $value;
+	transition: $value;
+}
+
+@mixin transition-delay ($value) {
+	-webkit-transition-delay: $value;
+	-moz-transition-delay: $value;
+	-ms-transition-delay: $value;
+	-o-transition-delay: $value;
+	transition-delay: $value;
+}
+
+@mixin animation ($value) {
+	-webkit-animation: #{$value};
+	-moz-animation: #{$value};
+	-ms-animation: #{$value};
+	-o-animation: #{$value};
+	animation: #{$value};
+}
+
+@mixin keyframes($name) {
+
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+
+	@-webkit-keyframes #{$name} {
+		@content;
+	}
+
+	@-o-keyframes #{$name} {
+		@content;
+	}
+
+	@keyframes #{$name} {
+		@content;
+	}
+
+}
+
+@mixin respond-to-max($max) {
+	@media screen and (max-width: $max) {
+		@content;
+	}
+}
+
+@mixin respond-to-min($min) {
+	@media screen and (min-width: $min) {
+		@content;
+	}
+}
+
+@mixin respond-to-between($min, $max) {
+	@media screen and (min-width: $min) and (max-width: $max) {
+		@content;
+	}
+}
+
+
+#calendar-container {
+	padding: 0 20px 0 20px;
+	height: 100vh;
+	overflow: scroll;
+
+	#calendar-body-container {
+
+    .calendar-days-container {
+    	width: 100%;
+
+    	.calendar-days-content {
+    		width: 100%;
+    		display: table;
+    		border-collapse: collapse;
+
+    		.calendar-week {
+    			display: table-row;
+
+          .calendar-day {
+          	display: table-cell;
+          	width: 14.286%;
+          	height: 14vw;
+          	border: solid	1px $blue-grey;
+          	padding: 5px;
+
+          	&:hover {
+          		cursor: pointer;
+          	}
+
+          	&.weekend {
+          		background-color: rgba(174, 190, 197, 0.2);
+          	}
+
+          	&.today {
+          		background-color: rgba(0, 14, 36, 0.4);
+          	}
+
+          	&.trailing, &.leading {
+
+          		.calendar-day-content {
+          			opacity: 0.4;
+          		}
+
+          	}
+
+          }
+
+          @include respond-to-max(768px) {
+
+          	.calendar-day {
+          		font-size: 13px;
+          	}
+
+          }
+
+          @include respond-to-max(468px) {
+
+          	.calendar-day {
+          		vertical-align: middle;
+          		text-align: center;
+              border-color: rgba(0, 0, 0, 0);
+          	}
+
+          }
+    		}
+
+    	}
+
+    	.calendar-days-header-container {
+    		height: 64px;
+    		padding: 20px 0;
+
+    		&.active {
+    			.calendar-days-header {
+
+    				&.primary-header {
+    					opacity: 0.9;
+    					z-index: 2;
+
+    					.month {
+    						font-weight: 400;
+    					}
+
+    					.year {
+    						font-weight: 300;
+    					}
+
+    				}
+
+    				&.scrolling-header {
+    					opacity: 0;
+    				}
+    			}
+    		}
+
+    		.calendar-days-header {
+    			z-index: 3;
+    			line-height: 24px;
+    			margin: 0;
+    			font-size: 18px;
+    			opacity: 1;
+    			@include transition(opacity 0.3s);
+
+    			&.primary-header {
+    				color: $light-blue;
+    				position: fixed;
+    				top: 15px;
+    				opacity: 0;
+    				z-index: 0;
+    				font-size: 20px;
+    			}
+
+    			.month {
+    				font-weight: 500;
+    			}
+
+    			.year {
+    				font-weight: 400;
+    			}
+
+    		}
+
+    	}
+
+    }
+
+    @include respond-to-max(768px) {
+    	.calendar-days-container {
+
+    		.calendar-days-header-container {
+    			height: 44px;
+    			padding: 10px 0;
+
+    			.calendar-days-header {
+    				font-size: 16px;
+
+    				&.primary-header {
+    					top: 4px;
+    					left: 50%;
+    					font-size: 16px;
+    					@include transform(translateX(-50%));
+    				}
+
+    			}
+
+    		}
+
+    	}
+
+    }
+
+    @include respond-to-max(468px) {
+
+    	.calendar-days-container {
+
+    		.calendar-days-content {
+    			// border-collapse: separate;
+    		}
+
+    	}
+
+    }
+	}
+
+}
+
+#calendar-header-container {
+	position: fixed;
+	left: 0;
+	padding: 0 20px;
+	z-index: 2;
+	background-color: $dark-blue;
+	opacity: 0.93;
+	color: $light-blue;
+	width: 100%;
+	height: 65px;
+	border-bottom: solid	1px $blue-grey;
+
+	#calendar-header-days-container {
+		display: table;
+		width: 100%;
+		height: 100%;
+
+		#calendar-header-days {
+			display: table-row;
+			list-style-type: none;
+			padding: 0;
+
+			.calendar-header-day {
+				display: table-cell;
+				width: 14.286%;
+				text-align: right;
+				vertical-align: bottom;
+				padding: 0 3px 3px 0;
+				opacity: 0.6;
+			}
+
+		}
+
+	}
+
+}
+
+@include respond-to-max(768px) {
+	#calendar-header-container {
+		height: 50px;
+
+		#calendar-header-days-container {
+
+			#calendar-header-days {
+
+				.calendar-header-day {
+					font-size: 13px;
+					opacity: 0.5;
+					text-align: center;
+				}
+
+			}
+
+		}
+
+	}
+}
